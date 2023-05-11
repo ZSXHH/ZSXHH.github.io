@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name = "viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style>
+textarea {
+width:390px;
+height:360px;
+}
+</style>
+</head>
+
+<body>
+<textarea id="showresult"></textarea>
+GBK：<input type="file" id="opengbk"/>
+<button onclick="copyText()">copy</button>
+
+<script type="text/javascript">
+function copyText() {
+document.getElementById("showresult").select();
+document.execCommand("copy");
+console.log('已复制');
+}
+
+function china(evt) {
+  var files = evt.target.files,
+      reader = new FileReader();
+    reader.onload = function() {
+        showout.value = this.result;
+    };
+    reader.readAsText(files[0], 'gbk');
+}
+
+var showout = document.getElementById("showresult");
+opengbk.addEventListener("change", china, false);
+</script>
+
+</body>
+</html>
