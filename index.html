@@ -23,7 +23,7 @@ a {
 <textarea id="showresult"></textarea>
 GBK：<input type="file" id="opengbk"/>
 <button onclick="copyText()">Copy</button>
-<a id="save-btn" href="" download="noname.txt">Save</a>
+<a id="save-btn" href="" download="noname.txt">Save1</a>
 
 <script type="text/javascript">
 function copyText() {
@@ -51,13 +51,13 @@ var content,btn;
 btn = document.getElementById("save-btn");
 //btn.setAttribute( "href","data:text/ paint; utf-8," + showout.value);
 
-showout.addEventListener("change",function(){
+showresult.addEventListener("change",function(){
 var f = function(){
-btn.setAttribute( "href","data:text/ paint; utf-8," + showout.value);
+btn.setAttribute( "href","data:text/ paint; utf-8," + showresult.value);
 }
 return f(), f;
 
-}());  */  
+}()); 
   </script>  
 </body>
 </html>
