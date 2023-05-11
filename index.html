@@ -24,7 +24,7 @@ a {
 <textarea id="showresult"></textarea>
 GBK：<input type="file" id="opengbk"/>
 <button onclick="copyText()">Copy</button>
-<a id="save-btn" href="" download="noname.txt">Save</a>
+<a id="save-btn" href="" download="subtitle.srt">Save</a>
 
 <script type="text/javascript">
 function copyText() {
@@ -40,25 +40,16 @@ function china(evt) {
     };
     reader.readAsText(files[0], 'gbk');
 }
-
 var showout = document.getElementById("showresult");
 opengbk.addEventListener("change", china, false);
 
-
-var content,btn;
-
-//content =document.querySelector("#content");
-
-btn = document.getElementById("save-btn");
-//btn.setAttribute( "href","data:text/ paint; utf-8," + showout.value);
-
+var btn = document.getElementById("save-btn");
 showresult.addEventListener("change",function(){
 var f = function(){
-btn.setAttribute( "href","data:text/ paint; utf-8," + showresult.value);
+btn.setAttribute( "href","data:text/ paint; gbk," + showresult.value);
 }
 return f(), f;
-
 }()); 
-  </script>  
+</script>  
 </body>
 </html>
