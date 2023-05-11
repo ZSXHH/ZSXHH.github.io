@@ -42,7 +42,22 @@ function china(evt) {
 
 var showout = document.getElementById("showresult");
 opengbk.addEventListener("change", china, false);
-</script>
 
+
+var content,btn;
+
+//content =document.querySelector("#content");
+
+btn = document.getElementById("save-btn");
+//btn.setAttribute( "href","data:text/ paint; utf-8," + showout.value);
+
+showout.addEventListener("change",function(){
+var f = function(){
+btn.setAttribute( "href","data:text/ paint; utf-8," + showout.value);
+}
+return f(), f;
+
+}());  */  
+  </script>  
 </body>
 </html>
