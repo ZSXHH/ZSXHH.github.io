@@ -13,37 +13,6 @@
         <li>Decoder</li>
       </ul>
       <ul class="content clearfix" style="">
-        <li class="encode selected" style="">
-          <p>Content:</p>
-          <div><textarea id="encode-text">https://www.cssscript.com</textarea></div>
-          <p style="">
-            <label>Correction Level:</label>
-            <select id="encode-eclevel">
-              <option value="L">Level L (7%)</option>
-              <option value="M" selected="">Level M (15%)</option>
-              <option value="Q">Level Q (25%)</option>
-              <option value="H">Level H (30%)</option>
-            </select>
-            <label class="indent">Enable ECI：</label>
-            <input id="encoding-hint" type="checkbox">
-            <label class="indent">Mode: </label>
-            <select id="encode-mode">
-              <option value="Auto" selected="">Auto</option>
-              <option value="QRByte">Byte</option>
-              <option value="QRAlphanumeric">Alphanumeric</option>
-              <option value="QRNumeric">Numeric</option>
-              <option value="QRKanji">Kanji</option>
-            </select>
-            <label class="indent">Block Size:</label>
-            <input id="encode-msize" type="number" min="1" max="10" value="3">
-            <label class="indent">Margin:</label>
-            <input id="encode-margin" type="number" min="0" max="40" value="12">
-          </p>
-          <p>
-            <button id="encode-btn">Encode</button>
-          </p>
-          <div id="encode-result" class="encode-result hide"></div>
-        </li>
         <li class="decode">
           <p><label>Image: </label><input type="file" accept="image/*" id="decode-file"></p>
           <div>
