@@ -5,7 +5,7 @@
 }(this, function (exports) { 'use strict';
 
     /**
-     * 原作者链接：https://www.cssscript.com/demo/decoding-encoding-qr-code/qrcode.js?v2
+     * https://www.cssscript.com/demo/decoding-encoding-qr-code/qrcode.js?v2
      * @module Mode
      * @author nuintun
      * @author Cosmo Wolfe
