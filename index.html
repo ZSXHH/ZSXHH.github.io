@@ -1,0 +1,169 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name = "viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+<style>
+body{width:96%;}
+.main{width:100%;background:#fafafa;border:1px solid #bbb}
+textarea{width:100%;height:100px;font-size:16px;resize:none;padding:5px;box-sizing:border-box}
+canvas{width:200px;height:200px}
+</style>
+</head>
+
+<body>
+ <div class="main">
+   <canvas id="decode-canvas"></canvas>
+   <input type="file" accept="image/*" id="decode-file">
+   <button onclick="copyText()">复制</button>
+   <button onclick="deButton()">解码</button>
+   <p id="decode-text"><textarea id="showresult"></textarea></p>
+ </div>
+ <div>
+   <p><b>原作者网页：<a href="https://www.cssscript.com/demo/decoding-encoding-qr-code" target="_blank" style="color:#5E5E5E" rel="">https://www.cssscript.com/demo/······</a></b></p>
+   <p>我的TG频道：<a href="https://t.me/iixiaobai" target="_blank" style="color:#5E5E5E" rel="">@iixiaobai</a></p>
+ </div>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+ <script type="text/javascript" src="https://www.cssscript.com/demo/decoding-encoding-qr-code/qrcode.js?v2"></script>
+    
+ <script type="text/javascript">
+      
+   var hasImage = false;
+   var imageData = null;
+   var decodeText = $('#decode-text');
+   var canvas = $('#decode-canvas')[0];
+   var context = canvas.getContext('2d');
+   var decodeResult = decodeText.find('textarea');
+
+   function resetDecoder(){
+     hasImage = false;
+     imageData = null;
+     decodeResult.val('');
+     decodeText.addClass('hide');
+}
+
+   function drawImage(src){
+     var img = new Image();
+     img.crossOrigin = 'anonymous';
+     img.onload = function(){
+     var width = img.width;
+     var height = img.height;
+     var actualWidth = Math.min(960, width);
+     var actualHeight = height * (actualWidth / width);
+
+     hasImage = true;
+     canvas.width = actualWidth;
+     canvas.height = actualHeight;
+
+     context.drawImage(img, 0, 0, width, height, 0, 0, actualWidth, actualHeight);
+
+     imageData = context.getImageData(0, 0, actualWidth, actualHeight);
+ };
+     img.src = src;
+}
+
+   $('#decode-file').on('change', function(e){
+     var file = e.target.files[0];
+
+      if (file) {
+        resetDecoder();
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          drawImage(e.target.result);};
+        reader.readAsDataURL(file);
+                }
+})
+
+  function getImageData(){
+
+imageData && context.putImageData(imageData, 0, 0);
+return imageData || context.getImageData(0, 0, canvas.width, canvas.height);
+}
+
+  function getModuleSize(location, version) {
+     var topLeft = location.topLeft;
+     var topRight = location.topRight;
+     var a = Math.abs(topRight.x - topLeft.x);
+     var b = Math.abs(topRight.y - topLeft.y);
+     var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+
+       return c / (version * 4 + 17);
+}
+
+  function markFinderPattern(x, y, moduleSize) {
+     context.fillStyle = '#00ff00';
+     context.beginPath();
+     context.arc(x, y, moduleSize * 0.75, 0, 2 * Math.PI);
+     context.fill();
+}
+
+  function markQRCodeArea(location, version) {
+    context.lineWidth = 2;
+    context.strokeStyle = '#00ff00';
+
+    context.beginPath();
+    context.moveTo(location.topLeft.x, location.topLeft.y);
+    context.lineTo(location.topRight.x, location.topRight.y);
+    context.lineTo(location.bottomRight.x, location.bottomRight.y);
+    context.lineTo(location.bottomLeft.x, location.bottomLeft.y);
+    context.lineTo(location.topLeft.x, location.topLeft.y);
+    context.stroke();
+
+   var moduleSize = getModuleSize(location, version);
+
+   markFinderPattern(location.topLeftFinder.x, location.topLeftFinder.y, moduleSize);
+              
+   markFinderPattern(location.topRightFinder.x, location.topRightFinder.y, moduleSize);
+         
+   markFinderPattern(location.bottomLeftFinder.x, location.bottomLeftFinder.y, moduleSize);
+}
+
+var s = 0;
+var qlog = document.getElementsByTagName('textarea')[0];
+var SET = setInterval(function(){
+    s+=0.6;
+  if(s>=8.5){
+    //console.log('未上传，已结束');
+    qlog.value += '\n自动解码结束！之后请点击解码按钮或刷新页面';
+    clearInterval(SET)}
+  else if(hasImage){
+    //return alert('Empty'); 
+    var imageData = getImageData();
+    var result = new QRCode.Decoder().decode(imageData.data, imageData.width, imageData.height);
+                 //}//if (result) {
+    decodeResult.val(result.data);
+    //decodeText.removeClass('hide');
+    markQRCodeArea(result.location, result.version);
+    console.log(s+'s内结束！');
+    clearInterval(SET);
+}
+else{
+    qlog.value += (s.toFixed(1)+'s ');
+}},600);
+  /https?:/i.test(location.protocol) && drawImage('./qrcode.jpg');
+</script>
+
+<script type="text/javascript">
+ function copyText() {
+  document.getElementById("showresult").select();
+  document.execCommand("copy");
+  console.log('已复制');
+}
+</script>
+
+<script type="text/javascript">
+ function deButton() {
+   if(hasImage){
+    //return alert('Empty'); 
+    var imageData = getImageData();
+    var result = new QRCode.Decoder().decode(imageData.data, imageData.width, imageData.height);
+                 //}//if (result) {
+    decodeResult.val(result.data);
+    //decodeText.removeClass('hide');
+    markQRCodeArea(result.location, result.version);
+}}
+/https?:/i.test(location.protocol) && drawImage('./qrcode.jpg');
+</script>
+</body>
+</html>
