@@ -162,6 +162,7 @@ function autoDe() {
 function copyText() {
   document.getElementById("showresult").select();
   document.execCommand("copy");
+  document.getSelection().empty();
   //console.log('已复制');
 }
 
